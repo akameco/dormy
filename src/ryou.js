@@ -13,7 +13,7 @@ function getAreaHTML(area) {
       if (!error && response.statusCode == 200) {
         resolve(body)
       } else {
-        reject(body)
+        reject(new Error(error))
       }
     })
   })
@@ -21,7 +21,7 @@ function getAreaHTML(area) {
 
 function getAllArea() {
   let area = ['kansai', 'kanto', 'hokkaido', 'kyusyu', 'nagoya', 'sendai']
-  return Promise.all(area.map(v => getAreaHTML(v)))
+  return Promise.all(area.map(getAreaHTML))
 }
 
 export function parseRyou(body) {
@@ -44,7 +44,7 @@ export function parseRyou(body) {
 
 export function getAreaList() {
   return getAllArea().then((body) => {
-    return Array.prototype.concat.apply([], body.map(v => parseRyou(v)))
+    return Array.prototype.concat.apply([], body.map(parseRyou))
   })
 }
 
