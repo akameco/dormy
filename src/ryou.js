@@ -34,8 +34,8 @@ export function parseRyou(body) {
       // "ryou"の次の行に寮の名前
       if(/ryou/.test(e)) {
         return {
-          ryou: e.match(/value="([a|b][1|2]|hai)"/)[1],
-          name: a[i+1].replace(/<.+/,'')
+          name: a[i+1].replace(/<.+/,''),
+          ryou: e.match(/value="([a|b][1|2]|hai)"/)[1]
         }
       }
     })
