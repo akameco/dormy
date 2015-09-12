@@ -1,7 +1,8 @@
 import Promise from 'bluebird'
 import request from 'request'
+import _ from 'lodash'
 import {toUTF8} from './util'
-import {Parse} from './parse.js'
+import parse from './parse'
 
 function promisePostRequest(params) {
   return new Promise((resolve, reject) => {
@@ -15,16 +16,27 @@ function promisePostRequest(params) {
   })
 }
 
-export function getMenu(date) {
+export function getMenusList() {
+  let ryous = ['a1', 'a2', 'b1', 'b2', 'hai']
+  return Promise.all(ryous.map(getMenus))
+    .then(list => {
+      let data = {}
+      _.zip(ryous, list).forEach(r => {
+        data[r[0]] = r[1]
+      })
+      return data
+    })
+}
+
+export function getMenus(ryou) {
   let params = {
-    url:'http://www.dnet.gr.jp/menulist/search/index.php',
-    form: {area: 'kanto', stuki: 'this_month', ryou: 'a1'},
+    url: 'http://www.dnet.gr.jp/menulist/search/index.php',
+    form: {area: 'kanto', stuki: 'this_month', ryou: ryou},
     encoding: null
   }
 
   return promisePostRequest(params).then((body) => {
-    let menus = new Parse(body).menus
-    return  menus.filter((x) => x.date === date)[0]
+    return parse(body)
   })
 }
 
