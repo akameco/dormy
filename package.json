@@ -1,7 +1,7 @@
 {
   "name": "dormy",
   "version": "0.0.1",
-  "description": "scraping for dormy",
+  "description": "寮のメニューのスクレイピングとパース",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -9,7 +9,7 @@
   "scripts": {
     "build": "babel src --out-dir lib --source-maps inline",
     "watch": "babel src --out-dir lib --watch --source-maps inline",
-    "test": "mocha test/**/*.js"
+    "test": "mocha"
   },
   "author": "akameco",
   "license": "MIT",
