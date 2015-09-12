@@ -6,7 +6,7 @@
 ## Install
 
 ```
-npm install --save akameco/dormy.git
+npm install --save dormy
 ```
 
 ## Usage
