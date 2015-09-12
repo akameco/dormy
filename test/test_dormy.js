@@ -1,9 +1,10 @@
 import assert from 'power-assert'
 import fs from 'fs'
 import {Iconv} from 'iconv'
-import parse from '../src/parse.js'
-import {getMenu} from '../src/menu.js'
-import {parseRyou, getAreaList} from '../src/ryou.js'
+import parse from '../src/parse'
+import {parseRyou} from '../src/ryou'
+import getAreaList from '../src/ryou'
+import {toUTF8} from '../src/util'
 
 describe('メニューのパース', () => {
   let file = fs.readFileSync('./mock/menu.html')
@@ -30,7 +31,7 @@ describe('メニューのパース', () => {
 
 describe('寮のパース', () => {
   let file = fs.readFileSync('./mock/ryou.html')
-  let list = parseRyou(file)
+  let list = parseRyou(toUTF8(file))
   let t = list.filter(x => x.name === 'ドーミー新松戸')[0]
   it('名前が一致すること', () => {
     assert(t.name === 'ドーミー新松戸')

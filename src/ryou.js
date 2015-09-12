@@ -1,32 +1,16 @@
 import Promise from 'bluebird'
-import request from 'request'
-import {toUTF8} from './util'
+import {get} from './util'
 
 function getAreaHTML(area) {
   let params = {
     url: `http://www.dnet.gr.jp/menulist/search/${area}.html`,
     encoding: null
   }
-
-  return new Promise((resolve, reject) => {
-    request.get(params, (error, response, body) => {
-      if (!error && response.statusCode == 200) {
-        resolve(body)
-      } else {
-        reject(new Error(error))
-      }
-    })
-  })
-}
-
-function getAllArea() {
-  let area = ['kansai', 'kanto', 'hokkaido', 'kyusyu', 'nagoya', 'sendai']
-  return Promise.all(area.map(getAreaHTML))
+  return get(params)
 }
 
 export function parseRyou(body) {
-  return toUTF8(body)
-    .toString()
+  return body.toString()
     .replace("\t",'')
     .split("\n")
     .map(x => x.trim())
@@ -42,8 +26,9 @@ export function parseRyou(body) {
     .filter(x => x !==undefined)
 }
 
-export function getAreaList() {
-  return getAllArea().then((body) => {
+export default function getAreaList() {
+  let area = ['kansai', 'kanto', 'hokkaido', 'kyusyu', 'nagoya', 'sendai']
+  return Promise.all(area.map(getAreaHTML)).then((body) => {
     return Array.prototype.concat.apply([], body.map(parseRyou))
   })
 }
