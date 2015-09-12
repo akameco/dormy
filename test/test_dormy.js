@@ -1,7 +1,7 @@
 import assert from 'power-assert'
 import fs from 'fs'
 import {Iconv} from 'iconv'
-import {Parse} from '../src/parse.js'
+import parse from '../src/parse.js'
 import {getMenu} from '../src/menu.js'
 import {parseRyou, getAreaList} from '../src/ryou.js'
 
@@ -9,8 +9,7 @@ describe('メニューのパース', () => {
   let file = fs.readFileSync('./mock/menu.html')
   let iconv = new Iconv('sjis', 'utf-8')
   let buffer = iconv.convert(file)
-  let parse = new Parse(buffer)
-  let menu = parse.menus.filter((x) => x.date === '2015-9-2')[0]
+  let menu = parse(buffer)['2015-9-2']
 
   it('朝食の和食メニューが一致すること', () => {
     let t = menu.breakfirst[0]
@@ -38,14 +37,6 @@ describe('寮のパース', () => {
   })
   it('寮のタイプが一致すること', () => {
     assert(t.ryou === 'a1')
-  })
-})
-
-describe('メニューをスクレイピングした結果', () => {
-  it('メニューが一致すること',()=>{
-    return getMenu('2015-9-2').then((menu)=> {
-      assert(menu.dinner[0] === '魚ムニエルとタンドリーチキン')
-    })
   })
 })
 
