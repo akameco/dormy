@@ -1,4 +1,5 @@
 import Cheerio from 'cheerio'
+import moment from 'moment'
 
 export default function parse(buffer) {
   let $ = Cheerio.load(buffer)
@@ -6,7 +7,8 @@ export default function parse(buffer) {
   let getDate = (d) => {
     let y = new Date().getFullYear()
     let m = $('h1').text().match(/\d{1,2}/)[0]
-    return [y, m, d].join('-')
+    let date = moment([y, Number(m) - 1, d]).format('YYYY-MM-DD')
+    return  date
   }
 
   $('.result_main tr').slice(2).each((i, tr) => {

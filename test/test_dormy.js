@@ -10,7 +10,7 @@ describe('メニューのパース', () => {
   let file = fs.readFileSync('./mock/menu.html')
   let iconv = new Iconv('sjis', 'utf-8')
   let buffer = iconv.convert(file)
-  let menu = parse(buffer)['2015-9-2']
+  let menu = parse(buffer)['2015-09-02']
 
   it('朝食の和食メニューが一致すること', () => {
     let t = menu.breakfirst[0]
