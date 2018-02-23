@@ -1,4 +1,6 @@
 # dormy
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/akameco/dormy.svg)](https://greenkeeper.io/)
 ドーミー系列の寮のメニューをスクレイピングしてJSON形式でパースします。
 
 [dnet｜学生会館・ドーミーの食事献立情報](http://www.dnet.gr.jp/menulist/)
